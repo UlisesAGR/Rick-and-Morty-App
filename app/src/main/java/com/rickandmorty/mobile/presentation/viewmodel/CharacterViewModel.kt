@@ -26,13 +26,16 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterByIdUseCase: GetCharacterByIdUseCase,
 ) : ViewModel() {
 
+    private var _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
+    val characterUiEvent: SharedFlow<CharacterUiEvent> = _characterUiEvent
+
     private var _characterUiState = MutableSharedFlow<CharacterUiState>()
     val characterUiState: SharedFlow<CharacterUiState> = _characterUiState
 
     val characters: Flow<PagingData<CharacterModel>> = getCharactersUseCase()
         .cachedIn(viewModelScope)
         .catch {
-            _characterUiState.emit(CharacterUiState.Error(it))
+            _characterUiEvent.emit(CharacterUiEvent.Error(it))
         }
 
     fun getCharacterById(characterId: Int) = viewModelScope.launch {
@@ -45,10 +48,8 @@ class CharacterViewModel @Inject constructor(
                 }
             }
             .onFailure { exception ->
-                _characterUiState.apply {
-                    emit(CharacterUiState.Loading(isLoading = false))
-                    emit(CharacterUiState.Error(exception))
-                }
+                _characterUiState.emit(CharacterUiState.Loading(isLoading = false))
+                _characterUiEvent.emit(CharacterUiEvent.Error(exception))
             }
     }
 }

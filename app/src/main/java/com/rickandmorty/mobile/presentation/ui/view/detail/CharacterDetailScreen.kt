@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.rickandmorty.mobile.R
+import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiEvent
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiState
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
 import com.rickandmorty.mobile.util.handleError
@@ -40,15 +41,18 @@ fun CharacterDetailScreen(
 ) {
     val context = LocalContext.current
 
-    val characterUiState = viewModel.characterUiState.collectAsState(CharacterUiState.Empty).value
+    val characterUiEvent = viewModel.characterUiEvent.collectAsState(CharacterUiEvent.Initial).value
+
+    val characterUiState =
+        viewModel.characterUiState.collectAsState(CharacterUiState.Loading(isLoading = true)).value
 
     LaunchedEffect(characterId) {
         viewModel.getCharacterById(characterId)
     }
 
-    LaunchedEffect(characterUiState) {
-        if (characterUiState is CharacterUiState.Error) {
-            context.showToast(context.handleError(characterUiState.exception))
+    LaunchedEffect(characterUiEvent) {
+        if (characterUiEvent is CharacterUiEvent.Error) {
+            context.showToast(context.handleError(characterUiEvent.exception))
         }
     }
 
@@ -88,8 +92,6 @@ fun CharacterDetailScreen(
                             navigateToCharacters = navigateToCharacters,
                         )
                     }
-
-                    else -> {}
                 }
             }
         }

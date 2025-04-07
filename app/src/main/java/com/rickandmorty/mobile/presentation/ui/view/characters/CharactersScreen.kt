@@ -25,7 +25,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.ui.components.EmptyState
-import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiState
+import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiEvent
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
 import com.rickandmorty.mobile.util.handleError
 import com.rickandmorty.mobile.util.showToast
@@ -40,11 +40,12 @@ fun CharactersScreen(
     val context = LocalContext.current
 
     val characters = viewModel.characters.collectAsLazyPagingItems()
-    val characterUiState = viewModel.characterUiState.collectAsState(CharacterUiState.Empty).value
 
-    LaunchedEffect(characterUiState) {
-        if (characterUiState is CharacterUiState.Error) {
-            context.showToast(context.handleError(characterUiState.exception))
+    val characterUiEvent = viewModel.characterUiEvent.collectAsState(CharacterUiEvent.Initial).value
+
+    LaunchedEffect(characterUiEvent) {
+        if (characterUiEvent is CharacterUiEvent.Error) {
+            context.showToast(context.handleError(characterUiEvent.exception))
         }
     }
 

@@ -8,8 +8,6 @@ package com.rickandmorty.mobile.presentation.viewmodel
 import com.rickandmorty.mobile.domain.model.CharacterModel
 
 sealed class CharacterUiState {
-    internal data object Empty : CharacterUiState()
     internal data class Loading(val isLoading: Boolean) : CharacterUiState()
     internal data class ShowCharacter(val character: CharacterModel?) : CharacterUiState()
-    internal data class Error(val exception: Throwable?) : CharacterUiState()
 }
