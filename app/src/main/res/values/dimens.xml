@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ - dimens.xml
+ - Created by Ulises Gonzalez
+ - Copyright (c) 2025. All rights reserved
+-->
+<resources>
+
+    <!--Image-->
+    <dimen name="image.empty">256dp</dimen>
+    <dimen name="image.size">144dp</dimen>
+    <dimen name="image.description.size">320dp</dimen>
+    <dimen name="icon.size">16dp</dimen>
+
+    <!--Space-->
+    <dimen name="space.small">4dp</dimen>
+    <dimen name="space">8dp</dimen>
+    <dimen name="space.big">16dp</dimen>
+
+    <!--Padding-->
+    <dimen name="padding.small">8dp</dimen>
+    <dimen name="padding">16dp</dimen>
+    <dimen name="padding.big">32dp</dimen>
+
+    <!--Margin-->
+    <dimen name="margin.small">8dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="margin.big">32dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+</resources>

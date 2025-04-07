@@ -1,3 +1,31 @@
+<!--
+ - string.xml - english
+ - Created by Ulises Gonzalez
+ - Copyright (c) 2025. All rights reserved
+-->
 <resources>
-    <string name="app_name">Rick and Morty</string>
+
+    <!-- Internationalization -->
+    <string name="name_inter">Name: %1$s</string>
+    <string name="species_inter">Species: %1$s</string>
+
+    <!-- App -->
+    <string name="example">Example</string>
+    <string name="characters">Characters</string>
+
+    <!-- Handler -->
+    <string name="check_your_internet_connection">Check your internet connection</string>
+    <string name="timeout">Timeout</string>
+    <string name="please_try_again_later">At the moment we cannot perform this action, please try again later</string>
+    <string name="an_error_has_occurred">An error has occurred</string>
+
+    <!-- Empty State -->
+    <string name="empty_list">Empty List</string>
+    <string name="no_characters_available_for_show">No characters available for show</string>
+    <string name="no_character_available_for_show">No character available for show</string>
+
+    <!-- Character -->
+    <string name="circular_icon">Circular icon</string>
+    <string name="back">Back</string>
+
 </resources>

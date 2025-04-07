@@ -1,21 +1,18 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# proguard-rules.pro - Module app
+# Created by Ulises Gonzalez
+# Copyright (c) 2025. All rights reserved
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Prevent deletion of annotations network and local
+-keepattributes *Annotation*
+-keep class kotlin.Metadata { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Preserve data class and sealed classes
+-keep class kotlin.Metadata { *; }
+-keep class kotlin.jvm.internal.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Avoid obfuscating inline functions
+-keep class kotlin.coroutines.** { *; }
+
+# Remove message for notnull annotations
+-keep class org.jetbrains.annotations.** { *; }
+-dontwarn org.jetbrains.annotations.**

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Internationalization -->
+    <string name="name_inter">Nombre: %1$s</string>
+    <string name="species_inter">Especies: %1$s</string>
+
+    <!-- App -->
+    <string name="example">Ejemplo</string>
+    <string name="characters">Personajes</string>
+    <string name="check_your_internet_connection">Verifica tu conexion a internet</string>
+    <string name="timeout">Tiempo agotado</string>
+    <string name="please_try_again_later">En estos momentos no podemos realizar esta acción, por favor inténtalo más tarde</string>
+    <string name="an_error_has_occurred">Ah ocurrdio un error</string>
+
+    <!-- Empty State -->
+    <string name="empty_list">Lista vacia</string>
+    <string name="no_characters_available_for_show">Sin personajes para mostrar</string>
+    <string name="no_character_available_for_show">Sin personaje para mostrar</string>
+
+    <!-- Character -->
+    <string name="circular_icon">Icono circular</string>
+    <string name="back">Atras</string>
+
+</resources>

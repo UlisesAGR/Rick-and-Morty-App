@@ -1,5 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+ - themes.xml - app
+ - Created by Ulises Gonzalez
+ - Copyright (c) 2025. All rights reserved
+-->
 <resources>
 
     <style name="Theme.RickAndMorty" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Splash theme -->
+    <style name="Theme.RickAndMorty.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FFFBF9F8</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/il_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.RickAndMorty</item>
+    </style>
+
 </resources>
