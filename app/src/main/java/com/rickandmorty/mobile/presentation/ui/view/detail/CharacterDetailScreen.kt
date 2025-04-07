@@ -23,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiState
@@ -76,8 +75,7 @@ fun CharacterDetailScreen(
             Box(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(dimensionResource(id = R.dimen.padding_big)),
+                    .padding(innerPadding),
             ) {
                 when (characterUiState) {
                     is CharacterUiState.Loading -> {
