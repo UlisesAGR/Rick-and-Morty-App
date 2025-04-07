@@ -23,10 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Scale
+import coil.transform.RoundedCornersTransformation
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import com.rickandmorty.mobile.util.getCharacterStatusColor
@@ -37,6 +42,8 @@ fun CharacterItem(
     character: CharacterModel,
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_small))
@@ -50,7 +57,14 @@ fun CharacterItem(
                     .fillMaxWidth()
                     .size(dimensionResource(id = R.dimen.image_size)),
                 contentScale = ContentScale.Crop,
-                model = character.image,
+                model = ImageRequest.Builder(context)
+                    .data(character.image)
+                    .transformations(RoundedCornersTransformation())
+                    .crossfade(true)
+                    .placeholder(R.drawable.il_logo)
+                    .error(R.drawable.il_logo)
+                    .scale(Scale.FILL)
+                    .build(),
                 contentDescription = character.name,
             )
             Spacer(
@@ -70,7 +84,7 @@ fun CharacterItem(
                 Spacer(modifier = modifier.width(dimensionResource(id = R.dimen.space)))
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = character.name,
+                    text = character.name ?: stringResource(R.string.empty),
                     style = MaterialTheme.typography.titleSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -80,11 +94,27 @@ fun CharacterItem(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(id = R.dimen.padding)),
-                text = character.species,
+                text = character.species ?: stringResource(R.string.empty),
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CharacterItemPreview() {
+    CharacterItem(
+        character = CharacterModel(
+            id = 1,
+            name = "Rick Sanchez",
+            status = "Alive",
+            species = "Human",
+            gender = "Male",
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+        ),
+        navigateToCharacterDetail = {},
+    )
 }

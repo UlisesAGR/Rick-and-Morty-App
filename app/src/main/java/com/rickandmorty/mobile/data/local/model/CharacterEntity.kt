@@ -12,16 +12,18 @@ import com.rickandmorty.mobile.domain.model.CharacterModel
 @Entity(tableName = "characters")
 data class CharacterEntity(
     @PrimaryKey val id: Int,
-    val name: String,
-    val species: String,
-    val status: String,
-    val image: String,
+    val name: String?,
+    val species: String?,
+    val status: String?,
+    val gender: String?,
+    val image: String?,
 ) {
     fun toDomain(): CharacterModel = CharacterModel(
         id = id,
         name = name,
         species = species,
         status = status,
+        gender = gender,
         image = image,
     )
 }

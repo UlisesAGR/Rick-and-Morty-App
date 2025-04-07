@@ -6,12 +6,14 @@
 <resources>
 
     <!-- Internationalization -->
-    <string name="name_inter">Name: %1$s</string>
     <string name="species_inter">Species: %1$s</string>
+    <string name="gender_inter">Gender: %1$s</string>
 
     <!-- App -->
     <string name="example">Example</string>
+    <string name="empty">Empty</string>
     <string name="characters">Characters</string>
+    <string name="character">Character detail</string>
 
     <!-- Handler -->
     <string name="check_your_internet_connection">Check your internet connection</string>

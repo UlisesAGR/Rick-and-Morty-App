@@ -42,7 +42,9 @@ class CharacterRepositoryImpl @Inject constructor(
                 val characters = response.results
 
                 characterLocalSource.insertAllCharacters(
-                    characters.map { it.toEntity() }
+                    characters.map { character ->
+                        character.toEntity()
+                    }
                 )
 
                 val prevKey = if (page > 0) page - 1 else null
@@ -66,14 +68,14 @@ class CharacterRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCharacters(): Flow<PagingData<CharacterModel>> {
-        return Pager(
+    override fun getCharacters(): Flow<PagingData<CharacterModel>> =
+        Pager(
             config = PagingConfig(pageSize = MAX_ITEMS, prefetchDistance = PREFETCH_ITEMS),
             pagingSourceFactory = { this },
         ).flow.flowOn(dispatcher)
-    }
 
-    override suspend fun getCharacterById(characterId: Int): CharacterModel? = withContext(dispatcher) {
-        characterLocalSource.getCharacterById(characterId)?.toDomain()
-    }
+    override suspend fun getCharacterById(characterId: Int): CharacterModel? =
+        withContext(dispatcher) {
+            characterLocalSource.getCharacterById(characterId)?.toDomain()
+        }
 }

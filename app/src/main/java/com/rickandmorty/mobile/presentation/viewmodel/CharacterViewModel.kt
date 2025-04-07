@@ -8,6 +8,7 @@ package com.rickandmorty.mobile.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import com.rickandmorty.mobile.domain.usecase.GetCharacterByIdUseCase
 import com.rickandmorty.mobile.domain.usecase.GetCharactersUseCase
@@ -29,6 +30,7 @@ class CharacterViewModel @Inject constructor(
     val characterUiState: SharedFlow<CharacterUiState> = _characterUiState
 
     val characters: Flow<PagingData<CharacterModel>> = getCharactersUseCase()
+        .cachedIn(viewModelScope)
         .catch {
             _characterUiState.emit(CharacterUiState.Error(it))
         }

@@ -2,12 +2,16 @@
 <resources>
 
     <!-- Internationalization -->
-    <string name="name_inter">Nombre: %1$s</string>
     <string name="species_inter">Especies: %1$s</string>
+    <string name="gender_inter">Genero: %1$s</string>
 
     <!-- App -->
     <string name="example">Ejemplo</string>
+    <string name="empty">Vacio</string>
     <string name="characters">Personajes</string>
+    <string name="character">Detalle de personaje</string>
+
+    <!-- Handler -->
     <string name="check_your_internet_connection">Verifica tu conexion a internet</string>
     <string name="timeout">Tiempo agotado</string>
     <string name="please_try_again_later">En estos momentos no podemos realizar esta acción, por favor inténtalo más tarde</string>

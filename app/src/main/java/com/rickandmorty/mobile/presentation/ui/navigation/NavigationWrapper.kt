@@ -17,7 +17,6 @@ import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
 @Composable
 fun NavigationWrapper(viewModel: CharacterViewModel) {
     val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = Characters,
@@ -26,7 +25,9 @@ fun NavigationWrapper(viewModel: CharacterViewModel) {
             CharactersScreen(
                 viewModel = viewModel,
                 navigateToCharacterDetail = { characterId ->
-                    navController.navigate(CharacterDetail(characterId))
+                    navController.navigate(CharacterDetail(characterId)) {
+                        launchSingleTop = true
+                    }
                 },
             )
         }

@@ -100,8 +100,7 @@ fun ButtonCircular(
         onClick = { onClick() },
         modifier = modifier
             .size(60.dp)
-            .background(MaterialTheme.colorScheme.onPrimary, CircleShape)
-            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.onPrimary, CircleShape),
     ) {
         Icon(
             imageVector = image,

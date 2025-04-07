@@ -16,7 +16,6 @@ class GetCharacterByIdUseCase @Inject constructor(
 
     suspend operator fun invoke(characterId: Int): Result<CharacterModel> =
         runCatching {
-            characterRepository.getCharacterById(characterId)?.toDomain()
-                ?: throw CharacterNotFoundException()
+            characterRepository.getCharacterById(characterId) ?: throw CharacterNotFoundException()
         }
 }

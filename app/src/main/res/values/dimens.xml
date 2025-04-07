@@ -8,7 +8,7 @@
     <!--Image-->
     <dimen name="image.empty">256dp</dimen>
     <dimen name="image.size">144dp</dimen>
-    <dimen name="image.description.size">320dp</dimen>
+    <dimen name="image.description.size">192dp</dimen>
     <dimen name="icon.size">16dp</dimen>
 
     <!--Space-->

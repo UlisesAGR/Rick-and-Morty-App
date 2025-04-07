@@ -1,29 +1,33 @@
 /*
- * CharactersScreen.kt
+ * CharactersListScreen.kt
  * Created by Ulises Gonzalez
  * Copyright (c) 2025. All rights reserved
  */
 package com.rickandmorty.mobile.presentation.ui.view.characters
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.rickandmorty.mobile.domain.model.CharacterModel
 
 @Composable
-fun CharactersList(
+fun CharactersListScreen(
     modifier: Modifier = Modifier,
-    gridState: LazyGridState,
     characters: LazyPagingItems<CharacterModel>,
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
+    val lazyGridState = rememberLazyGridState()
+
     LazyVerticalGrid(
-        state = gridState,
-        modifier = modifier.fillMaxSize(),
+        state = lazyGridState,
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
         columns = GridCells.Fixed(2),
     ) {
         items(characters.itemCount) { index ->

@@ -8,7 +8,6 @@ package com.rickandmorty.mobile.presentation.ui.view.characters
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -39,7 +38,6 @@ fun CharactersScreen(
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
     val context = LocalContext.current
-    val gridState = rememberLazyGridState()
 
     val characters = viewModel.characters.collectAsLazyPagingItems()
     val characterUiState = viewModel.characterUiState.collectAsState(CharacterUiState.Empty).value
@@ -52,7 +50,9 @@ fun CharactersScreen(
 
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text(text = stringResource(id = R.string.characters)) }) },
+        topBar = {
+            TopAppBar(title = { Text(text = stringResource(id = R.string.characters)) })
+        },
         content = { innerPadding ->
             Box(
                 modifier = modifier
@@ -60,35 +60,30 @@ fun CharactersScreen(
                     .padding(innerPadding)
                     .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             ) {
-                when {
-                    characters.loadState.refresh is LoadState.Loading -> {
+                when (characters.loadState.refresh) {
+                    is LoadState.Loading -> {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
 
-                    characters.loadState.refresh is LoadState.NotLoading && characters.itemCount == 0 -> {
-                        EmptyState(
-                            modifier = Modifier.align(Alignment.Center),
-                            title = stringResource(R.string.no_characters_available_for_show),
-                        )
-                    }
-
-                    characters.loadState.hasError -> {
-                        EmptyState(
-                            modifier = Modifier.align(Alignment.Center),
-                            title = stringResource(R.string.an_error_has_occurred),
-                        )
-                    }
-
-                    else -> {
-                        if (characters.loadState.append is LoadState.Loading) {
-                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    is LoadState.NotLoading -> {
+                        if (characters.itemCount == 0) {
+                            EmptyState(
+                                modifier = Modifier.align(Alignment.Center),
+                                title = stringResource(R.string.no_characters_available_for_show)
+                            )
                         } else {
-                            CharactersList(
-                                gridState = gridState,
+                            CharactersListScreen(
                                 characters = characters,
                                 navigateToCharacterDetail = navigateToCharacterDetail,
                             )
                         }
+                    }
+
+                    is LoadState.Error -> {
+                        EmptyState(
+                            modifier = Modifier.align(Alignment.Center),
+                            title = stringResource(R.string.an_error_has_occurred)
+                        )
                     }
                 }
             }
