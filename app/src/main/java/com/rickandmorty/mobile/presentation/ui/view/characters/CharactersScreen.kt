@@ -62,13 +62,13 @@ fun CharactersScreen(
             ) {
                 when (characters.loadState.refresh) {
                     is LoadState.Loading -> {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
                     }
 
                     is LoadState.NotLoading -> {
                         if (characters.itemCount == 0) {
                             EmptyState(
-                                modifier = Modifier.align(Alignment.Center),
+                                modifier = modifier.align(Alignment.Center),
                                 title = stringResource(R.string.no_characters_available_for_show)
                             )
                         } else {
@@ -81,7 +81,7 @@ fun CharactersScreen(
 
                     is LoadState.Error -> {
                         EmptyState(
-                            modifier = Modifier.align(Alignment.Center),
+                            modifier = modifier.align(Alignment.Center),
                             title = stringResource(R.string.an_error_has_occurred)
                         )
                     }

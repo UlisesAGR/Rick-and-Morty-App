@@ -10,6 +10,7 @@
     <string name="empty">Vacio</string>
     <string name="characters">Personajes</string>
     <string name="character">Detalle de personaje</string>
+    <string name="unknown">Desconocido</string>
 
     <!-- Handler -->
     <string name="check_your_internet_connection">Verifica tu conexion a internet</string>

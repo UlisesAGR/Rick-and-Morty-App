@@ -14,6 +14,7 @@
     <string name="empty">Empty</string>
     <string name="characters">Characters</string>
     <string name="character">Character detail</string>
+    <string name="unknown">Unknown</string>
 
     <!-- Handler -->
     <string name="check_your_internet_connection">Check your internet connection</string>
