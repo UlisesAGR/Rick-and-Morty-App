@@ -5,6 +5,7 @@
  */
 package com.rickandmorty.mobile.presentation.ui.view.detail
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -76,21 +77,23 @@ fun CharacterDetailScreen(
             )
         },
         content = { innerPadding ->
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            ) {
-                when (characterUiState) {
-                    is CharacterUiState.Loading -> {
-                        CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
-                    }
+            Crossfade(targetState = characterUiState) { state ->
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                ) {
+                    when (state) {
+                        is CharacterUiState.Loading -> {
+                            CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
+                        }
 
-                    is CharacterUiState.ShowCharacter -> {
-                        CharacterDetail(
-                            character = characterUiState.character,
-                            navigateToCharacters = navigateToCharacters,
-                        )
+                        is CharacterUiState.ShowCharacter -> {
+                            CharacterDetail(
+                                character = state.character,
+                                navigateToCharacters = navigateToCharacters,
+                            )
+                        }
                     }
                 }
             }

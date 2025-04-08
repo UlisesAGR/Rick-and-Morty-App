@@ -5,6 +5,7 @@
  */
 package com.rickandmorty.mobile.presentation.ui.view.characters
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -55,36 +56,38 @@ fun CharactersScreen(
             TopAppBar(title = { Text(text = stringResource(id = R.string.characters)) })
         },
         content = { innerPadding ->
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
-            ) {
-                when (characters.loadState.refresh) {
-                    is LoadState.Loading -> {
-                        CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
-                    }
+            Crossfade(targetState = characters.loadState.refresh) { state ->
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
+                ) {
+                    when (state) {
+                        is LoadState.Loading -> {
+                            CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
+                        }
 
-                    is LoadState.NotLoading -> {
-                        if (characters.itemCount == 0) {
+                        is LoadState.NotLoading -> {
+                            if (characters.itemCount == 0) {
+                                EmptyState(
+                                    modifier = modifier.align(Alignment.Center),
+                                    title = stringResource(R.string.no_characters_available_for_show)
+                                )
+                            } else {
+                                CharactersListScreen(
+                                    characters = characters,
+                                    navigateToCharacterDetail = navigateToCharacterDetail,
+                                )
+                            }
+                        }
+
+                        is LoadState.Error -> {
                             EmptyState(
                                 modifier = modifier.align(Alignment.Center),
-                                title = stringResource(R.string.no_characters_available_for_show)
-                            )
-                        } else {
-                            CharactersListScreen(
-                                characters = characters,
-                                navigateToCharacterDetail = navigateToCharacterDetail,
+                                title = stringResource(R.string.an_error_has_occurred)
                             )
                         }
-                    }
-
-                    is LoadState.Error -> {
-                        EmptyState(
-                            modifier = modifier.align(Alignment.Center),
-                            title = stringResource(R.string.an_error_has_occurred)
-                        )
                     }
                 }
             }
