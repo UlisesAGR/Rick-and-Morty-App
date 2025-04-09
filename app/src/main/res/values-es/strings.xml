@@ -16,7 +16,10 @@
     <string name="check_your_internet_connection">Verifica tu conexion a internet</string>
     <string name="timeout">Tiempo agotado</string>
     <string name="please_try_again_later">En estos momentos no podemos realizar esta acción, por favor inténtalo más tarde</string>
+
+    <!-- My Handlers -->
     <string name="an_error_has_occurred">Ah ocurrdio un error</string>
+    <string name="character_not_found">Nose encontro el personaje</string>
 
     <!-- Empty State -->
     <string name="empty_list">Lista vacia</string>

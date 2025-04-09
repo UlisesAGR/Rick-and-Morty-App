@@ -29,7 +29,7 @@ import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiEvent
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiState
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
-import com.rickandmorty.mobile.util.handleError
+import com.rickandmorty.mobile.util.exception.handleError
 import com.rickandmorty.mobile.util.showToast
 
 @OptIn(ExperimentalMaterial3Api::class)

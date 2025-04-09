@@ -3,7 +3,7 @@
  * Created by Ulises Gonzalez
  * Copyright (c) 2025. All rights reserved
  */
-package com.rickandmorty.mobile.util
+package com.rickandmorty.mobile.util.exception
 
 import android.util.Log
 import com.rickandmorty.mobile.util.Constants.ERROR

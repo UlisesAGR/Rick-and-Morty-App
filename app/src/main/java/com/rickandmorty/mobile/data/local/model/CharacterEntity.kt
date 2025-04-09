@@ -9,7 +9,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.rickandmorty.mobile.domain.model.CharacterModel
 
-@Entity(tableName = "characters")
+@Entity(tableName = "characters_table")
 data class CharacterEntity(
     @PrimaryKey val id: Int,
     val name: String?,

@@ -6,9 +6,11 @@
 package com.rickandmorty.mobile.domain.usecase
 
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.rickandmorty.mobile.data.repository.CharacterRepositoryImpl
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetCharactersUseCase @Inject constructor(
@@ -16,5 +18,9 @@ class GetCharactersUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): Flow<PagingData<CharacterModel>> =
-        characterRepository.getCharacters()
+        characterRepository.getCharacters().map { value ->
+            value.map { character ->
+                character.toDomain()
+            }
+        }
 }

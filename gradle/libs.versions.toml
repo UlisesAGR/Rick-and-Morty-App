@@ -29,7 +29,8 @@ lib-hilt-compose = "1.2.0"
 lib-okhttp3 = '4.12.0'
 lib-retrofit = '2.11.0'
 # Room
-lib_room = "2.6.1"
+lib-room = "2.6.1"
+lib-room-paging = "2.6.1"
 # Test
 junit = "4.13.2"
 junit-version = "1.2.1"
@@ -82,9 +83,10 @@ com-okhttp3 = { module = 'com.squareup.okhttp3:logging-interceptor', version.ref
 com-retrofit2-retrofit = { module = 'com.squareup.retrofit2:retrofit', version.ref = 'lib-retrofit' }
 com-retrofit2-converter-gson = { module = 'com.squareup.retrofit2:converter-gson', version.ref = 'lib-retrofit' }
 # Room
-androidx-room = { module = "androidx.room:room-ktx", version.ref = "lib_room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "lib_room" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "lib_room" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "lib-room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "lib-room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "lib-room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "lib-room-paging" }
 # Hilt
 com-google-hilt = { module = "com.google.dagger:hilt-android", version.ref = "lib-hilt" }
 com-google-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "lib-hilt-compose" }
@@ -123,6 +125,7 @@ com-retrofit-libs = [
 androidx-room-libs = [
     'androidx-room',
     'androidx-room-runtime',
+    'androidx-room-paging',
 ]
 com-google-hilt-libs = [
     "com-google-hilt",

@@ -5,6 +5,7 @@
  */
 package com.rickandmorty.mobile.data.local.database
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,12 +18,12 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllCharacters(characters: List<CharacterEntity>)
 
-    @Query("SELECT * FROM characters")
-    suspend fun getAllCharacters(): List<CharacterEntity>
+    @Query("DELETE FROM characters_table")
+    suspend fun deleteAllCharacters()
 
-    @Query("SELECT * FROM characters WHERE id IN (:characterId)")
-    suspend fun getCharactersById(characterId: List<Int>): List<CharacterEntity>
+    @Query("SELECT * FROM characters_table")
+    fun getAllCharacters(): PagingSource<Int, CharacterEntity>
 
-    @Query("SELECT * FROM characters WHERE id = :characterId LIMIT 1")
+    @Query("SELECT * FROM characters_table WHERE id = :characterId LIMIT 1")
     suspend fun getCharacterById(characterId: Int): CharacterEntity?
 }

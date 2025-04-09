@@ -6,6 +6,6 @@
 package com.rickandmorty.mobile.data.network.model
 
 data class LocationResponse(
-    val name: String,
-    val url: String
+    val name: String?,
+    val url: String?,
 )

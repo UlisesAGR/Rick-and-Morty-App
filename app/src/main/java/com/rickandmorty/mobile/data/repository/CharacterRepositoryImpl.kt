@@ -6,18 +6,16 @@
 package com.rickandmorty.mobile.data.repository
 
 import android.net.ConnectivityManager
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
+import com.rickandmorty.mobile.data.local.model.CharacterEntity
 import com.rickandmorty.mobile.data.local.source.CharacterLocalSource
 import com.rickandmorty.mobile.data.network.source.CharacterNetworkSource
-import com.rickandmorty.mobile.domain.model.CharacterModel
+import com.rickandmorty.mobile.data.paging.CharacterRemoteMediator
 import com.rickandmorty.mobile.domain.repository.CharacterRepository
 import com.rickandmorty.mobile.util.Constants.MAX_ITEMS
-import com.rickandmorty.mobile.util.Constants.PREFETCH_ITEMS
-import com.rickandmorty.mobile.util.isNetworkAvailable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -29,53 +27,29 @@ class CharacterRepositoryImpl @Inject constructor(
     private val characterLocalSource: CharacterLocalSource,
     private val connectivityManager: ConnectivityManager,
     private val dispatcher: CoroutineDispatcher,
-) : CharacterRepository, PagingSource<Int, CharacterModel>() {
+) : CharacterRepository {
 
-    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? =
-        state.anchorPosition
-
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
-        val page = params.key ?: 1
-        return try {
-            if (isNetworkAvailable(connectivityManager)) {
-                val response = characterNetworkSource.getCharacters(page)
-                val characters = response.results
-
-                characterLocalSource.insertAllCharacters(
-                    characters.map { character ->
-                        character.toEntity()
-                    }
-                )
-
-                val prevKey = if (page > 0) page - 1 else null
-                val nextKey = if (response.info.next != null) page + 1 else null
-
-                LoadResult.Page(
-                    data = characters.map { it.toDomain() },
-                    prevKey = prevKey,
-                    nextKey = nextKey
-                )
-            } else {
-                val localCharacters = characterLocalSource.getAllCharacters()
-                LoadResult.Page(
-                    data = localCharacters.map { it.toDomain() },
-                    prevKey = null,
-                    nextKey = null
-                )
-            }
-        } catch (exception: Exception) {
-            LoadResult.Error(exception)
-        }
-    }
-
-    override fun getCharacters(): Flow<PagingData<CharacterModel>> =
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getCharacters(): Flow<PagingData<CharacterEntity>> =
         Pager(
-            config = PagingConfig(pageSize = MAX_ITEMS, prefetchDistance = PREFETCH_ITEMS),
-            pagingSourceFactory = { this },
+            config = PagingConfig(
+                pageSize = MAX_ITEMS,
+                initialLoadSize = MAX_ITEMS,
+            ),
+            remoteMediator = CharacterRemoteMediator(
+                characterNetworkSource,
+                characterLocalSource,
+                connectivityManager,
+            ),
+            pagingSourceFactory = {
+                characterLocalSource.getAllCharacters()
+            },
         ).flow.flowOn(dispatcher)
 
-    override suspend fun getCharacterById(characterId: Int): CharacterModel? =
-        withContext(dispatcher) {
-            characterLocalSource.getCharacterById(characterId)?.toDomain()
-        }
+    override suspend fun getCharacterById(
+        characterId: Int,
+    ): CharacterEntity? = withContext(dispatcher) {
+        characterLocalSource.getCharacterById(characterId)
+    }
 }
+

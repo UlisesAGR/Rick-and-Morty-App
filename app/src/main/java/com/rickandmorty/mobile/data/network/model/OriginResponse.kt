@@ -6,6 +6,6 @@
 package com.rickandmorty.mobile.data.network.model
 
 data class OriginResponse(
-    val name: String,
-    val url: String
+    val name: String?,
+    val url: String?,
 )

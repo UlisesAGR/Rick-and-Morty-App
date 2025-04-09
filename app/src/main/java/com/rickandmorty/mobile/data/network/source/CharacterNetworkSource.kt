@@ -6,7 +6,8 @@
 package com.rickandmorty.mobile.data.network.source
 
 import com.rickandmorty.mobile.data.network.model.CharactersResponse
+import com.rickandmorty.mobile.util.network.Resource
 
 interface CharacterNetworkSource {
-    suspend fun getCharacters(page: Int): CharactersResponse
+    suspend fun getCharacters(page: Int): Resource<CharactersResponse>
 }

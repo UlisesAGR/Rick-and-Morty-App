@@ -6,6 +6,6 @@
 package com.rickandmorty.mobile.data.network.model
 
 data class CharactersResponse(
-    val info: CharactersInfoResponse,
-    val results: List<CharacterResponse>,
+    val info: CharactersInfoResponse?,
+    val results: List<CharacterResponse>?,
 )

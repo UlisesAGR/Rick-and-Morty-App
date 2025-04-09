@@ -6,7 +6,6 @@
 package com.rickandmorty.mobile.data.network.model
 
 import com.rickandmorty.mobile.data.local.model.CharacterEntity
-import com.rickandmorty.mobile.domain.model.CharacterModel
 
 data class CharacterResponse(
     val id: Int,
@@ -22,15 +21,6 @@ data class CharacterResponse(
     val url: String?,
     val created: String?,
 ) {
-    fun toDomain(): CharacterModel = CharacterModel(
-        id = id,
-        name = name,
-        species = species,
-        status = status,
-        gender = gender,
-        image = image,
-    )
-
     fun toEntity(): CharacterEntity = CharacterEntity(
         id = id,
         name = name,
