@@ -15,7 +15,7 @@ import com.rickandmorty.mobile.data.local.source.CharacterLocalSource
 import com.rickandmorty.mobile.data.network.source.CharacterNetworkSource
 import com.rickandmorty.mobile.data.paging.CharacterRemoteMediator
 import com.rickandmorty.mobile.domain.repository.CharacterRepository
-import com.rickandmorty.mobile.util.Constants.MAX_ITEMS
+import com.rickandmorty.mobile.util.Constants.PAGE_SIZE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -29,21 +29,21 @@ class CharacterRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher,
 ) : CharacterRepository {
 
+    private val pagingSourceFactory = { characterLocalSource.getAllCharacters() }
+
     @OptIn(ExperimentalPagingApi::class)
     override fun getCharacters(): Flow<PagingData<CharacterEntity>> =
         Pager(
             config = PagingConfig(
-                pageSize = MAX_ITEMS,
-                initialLoadSize = MAX_ITEMS,
+                pageSize = PAGE_SIZE,
+                initialLoadSize = PAGE_SIZE,
             ),
             remoteMediator = CharacterRemoteMediator(
                 characterNetworkSource,
                 characterLocalSource,
                 connectivityManager,
             ),
-            pagingSourceFactory = {
-                characterLocalSource.getAllCharacters()
-            },
+            pagingSourceFactory = pagingSourceFactory,
         ).flow.flowOn(dispatcher)
 
     override suspend fun getCharacterById(
@@ -52,4 +52,3 @@ class CharacterRepositoryImpl @Inject constructor(
         characterLocalSource.getCharacterById(characterId)
     }
 }
-

@@ -5,13 +5,15 @@
  */
 package com.rickandmorty.mobile.presentation.ui.view.detail
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +23,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -32,14 +33,16 @@ import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
 import com.rickandmorty.mobile.util.exception.handleError
 import com.rickandmorty.mobile.util.showToast
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
-    characterId: Int,
     viewModel: CharacterViewModel,
+    characterId: Int,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacters: () -> Unit,
-) {
+) = with(sharedTransitionScope) {
     val context = LocalContext.current
 
     val characterUiEvent = viewModel.characterUiEvent.collectAsState(CharacterUiEvent.Initial).value
@@ -58,7 +61,12 @@ fun CharacterDetailScreen(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize()
+            .sharedBounds(
+                rememberSharedContentState(key = "image_$characterId"),
+                animatedVisibilityScope,
+            ),
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.character)) },
@@ -73,21 +81,18 @@ fun CharacterDetailScreen(
                             contentDescription = stringResource(id = R.string.back),
                         )
                     }
-                }
+                },
             )
         },
         content = { innerPadding ->
-            Crossfade(targetState = characterUiState) { state ->
-                Box(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                ) {
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            ) {
+                Crossfade(targetState = characterUiState) { state ->
                     when (state) {
-                        is CharacterUiState.Loading -> {
-                            CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
-                        }
-
+                        is CharacterUiState.Loading -> {}
                         is CharacterUiState.ShowCharacter -> {
                             CharacterDetail(
                                 character = state.character,

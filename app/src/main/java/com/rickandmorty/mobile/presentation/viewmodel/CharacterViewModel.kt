@@ -12,11 +12,13 @@ import androidx.paging.cachedIn
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import com.rickandmorty.mobile.domain.usecase.GetCharacterByIdUseCase
 import com.rickandmorty.mobile.domain.usecase.GetCharactersUseCase
+import com.rickandmorty.mobile.util.connection.ConnectivityObserverManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +26,7 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     getCharactersUseCase: GetCharactersUseCase,
     private val getCharacterByIdUseCase: GetCharacterByIdUseCase,
+    connectivityObserver: ConnectivityObserverManager
 ) : ViewModel() {
 
     private var _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
@@ -34,9 +37,13 @@ class CharacterViewModel @Inject constructor(
 
     val characters: Flow<PagingData<CharacterModel>> = getCharactersUseCase()
         .cachedIn(viewModelScope)
-        .catch {
-            _characterUiEvent.emit(CharacterUiEvent.Error(it))
-        }
+
+    val isConnected = connectivityObserver.isConnected
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+            initialValue = null,
+        )
 
     fun getCharacterById(characterId: Int) = viewModelScope.launch {
         _characterUiState.emit(CharacterUiState.Loading(isLoading = true))

@@ -18,7 +18,8 @@
     <string name="please_try_again_later">En estos momentos no podemos realizar esta acción, por favor inténtalo más tarde</string>
 
     <!-- My Handlers -->
-    <string name="an_error_has_occurred">Ah ocurrdio un error</string>
+    <string name="error_getting_characters">Error al obtener personajes</string>
+    <string name="an_error_has_occurred">Ah ocurrdio un error al descargar los personajes</string>
     <string name="character_not_found">Nose encontro el personaje</string>
 
     <!-- Empty State -->
@@ -27,7 +28,13 @@
     <string name="no_character_available_for_show">Sin personaje para mostrar</string>
 
     <!-- Character -->
+    <string name="retry">Reintentar</string>
+    <string name="no_more_characters_to_load">No hay mas personajes para mostrar</string>
     <string name="circular_icon">Icono circular</string>
     <string name="back">Atras</string>
+
+    <!-- Internet connection -->
+    <string name="you_are_currently_online">Estas actualmente en línea</string>
+    <string name="you_are_currently_offline">Estas actualmente sin conexion</string>
 
 </resources>

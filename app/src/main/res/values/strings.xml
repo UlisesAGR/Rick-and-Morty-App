@@ -20,6 +20,7 @@
     <string name="check_your_internet_connection">Check your internet connection</string>
     <string name="timeout">Timeout</string>
     <string name="please_try_again_later">At the moment we cannot perform this action, please try again later</string>
+    <string name="error_getting_characters">Error getting characters</string>
 
     <!-- My Handlers -->
     <string name="an_error_has_occurred">An error has occurred</string>
@@ -30,8 +31,16 @@
     <string name="no_characters_available_for_show">No characters available for show</string>
     <string name="no_character_available_for_show">No character available for show</string>
 
+    <!-- Character List -->
+    <string name="retry">Retry</string>
+    <string name="no_more_characters_to_load">No more characters to load</string>
+
     <!-- Character -->
     <string name="circular_icon">Circular icon</string>
     <string name="back">Back</string>
+
+    <!-- Internet connection -->
+    <string name="you_are_currently_online">You are currently online</string>
+    <string name="you_are_currently_offline">You are currently offline</string>
 
 </resources>

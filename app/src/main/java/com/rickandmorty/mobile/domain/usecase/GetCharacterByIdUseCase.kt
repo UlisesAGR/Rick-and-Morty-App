@@ -7,7 +7,7 @@ package com.rickandmorty.mobile.domain.usecase
 
 import com.rickandmorty.mobile.data.repository.CharacterRepositoryImpl
 import com.rickandmorty.mobile.domain.model.CharacterModel
-import com.rickandmorty.mobile.util.exception.Exception
+import com.rickandmorty.mobile.util.exception.GenericException
 import javax.inject.Inject
 
 class GetCharacterByIdUseCase @Inject constructor(
@@ -17,6 +17,6 @@ class GetCharacterByIdUseCase @Inject constructor(
     suspend operator fun invoke(characterId: Int): Result<CharacterModel?> =
         runCatching {
             characterRepository.getCharacterById(characterId)?.toDomain()
-                ?: throw Exception.CharacterNotFoundException()
+                ?: throw GenericException.CharacterNotFoundException()
         }
 }

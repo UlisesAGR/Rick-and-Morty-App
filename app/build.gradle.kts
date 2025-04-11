@@ -59,6 +59,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        resValues = true
     }
 }
 
@@ -77,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.foundation)
     // Libs
+    implementation(libs.androidx.material)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
@@ -84,6 +86,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.serialization)
     implementation(libs.io.coil)
+    implementation(libs.com.swiperefresh)
     // Hilt
     implementation(libs.bundles.com.google.hilt.libs)
     implementation(libs.material)

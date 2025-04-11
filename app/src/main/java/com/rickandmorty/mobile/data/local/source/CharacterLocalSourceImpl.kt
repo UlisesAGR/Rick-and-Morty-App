@@ -6,16 +6,22 @@
 package com.rickandmorty.mobile.data.local.source
 
 import androidx.paging.PagingSource
-import com.rickandmorty.mobile.data.local.database.CharacterDao
+import com.rickandmorty.mobile.data.local.database.dao.CharacterDao
+import com.rickandmorty.mobile.data.local.database.dao.CharacterRemoteKeysDao
 import com.rickandmorty.mobile.data.local.model.CharacterEntity
+import com.rickandmorty.mobile.data.local.model.CharacterRemoteKeys
 import com.rickandmorty.mobile.data.network.model.CharacterResponse
 import javax.inject.Inject
 
 class CharacterLocalSourceImpl @Inject constructor(
     private val characterDao: CharacterDao,
+    private val characterRemoteKeysDao: CharacterRemoteKeysDao,
 ) : CharacterLocalSource {
 
-    override suspend fun insertNewCharacters(characters: List<CharacterResponse>) {
+    override fun getAllCharacters(): PagingSource<Int, CharacterEntity> =
+        characterDao.getAllCharacters()
+
+    override suspend fun insertAllCharacters(characters: List<CharacterResponse>) {
         runCatching {
             characterDao.insertAllCharacters(
                 characters = characters.map { character ->
@@ -24,15 +30,28 @@ class CharacterLocalSourceImpl @Inject constructor(
             )
         }
     }
-
-    override suspend fun deleteAllCharacters() {
+    override suspend fun clearAllCharacters() {
         runCatching {
             characterDao.deleteAllCharacters()
         }
     }
 
-    override fun getAllCharacters(): PagingSource<Int, CharacterEntity> =
-        characterDao.getAllCharacters()
+    override suspend fun getRemoteKey(characterId: Int): CharacterRemoteKeys? =
+        runCatching {
+            characterRemoteKeysDao.getRemoteKey(characterId)
+        }.getOrNull()
+
+    override suspend fun insertAllKeys(keys: List<CharacterRemoteKeys>) {
+        runCatching {
+            characterRemoteKeysDao.insertAllKeys(keys)
+        }
+    }
+
+    override suspend fun clearRemoteKeys() {
+        runCatching {
+            characterRemoteKeysDao.clearRemoteKeys()
+        }
+    }
 
     override suspend fun getCharacterById(characterId: Int): CharacterEntity? =
         runCatching {

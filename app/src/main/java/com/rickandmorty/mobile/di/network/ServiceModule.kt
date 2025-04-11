@@ -1,5 +1,5 @@
 /*
- * CharacterServiceModule.kt
+ * ServiceModule.kt
  * Created by Ulises Gonzalez on 26/02/25
  * Copyright (c) 2025. All rights reserved
  */
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CharacterServiceModule {
+object ServiceModule {
 
     @Provides
     @Singleton

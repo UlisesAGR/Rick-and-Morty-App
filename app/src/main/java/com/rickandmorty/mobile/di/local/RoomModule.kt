@@ -8,7 +8,6 @@ package com.rickandmorty.mobile.di.local
 import android.content.Context
 import androidx.room.Room
 import com.rickandmorty.mobile.data.local.database.AppDatabase
-import com.rickandmorty.mobile.data.local.database.CharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,10 +26,5 @@ object RoomModule {
             context,
             AppDatabase::class.java,
             name = "DATABASE_NAME",
-        ).fallbackToDestructiveMigration().build()
-
-    @Provides
-    @Singleton
-    fun provideCharacterDao(database: AppDatabase): CharacterDao =
-        database.characterDao()
+        ).fallbackToDestructiveMigration(false).build()
 }

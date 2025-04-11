@@ -16,9 +16,10 @@ import java.util.concurrent.TimeoutException
 fun Context.handleError(exception: Throwable?): String {
     log(message = exception.toString())
     return when (exception) {
-        is Exception.CharacterNotFoundException -> getString(R.string.character_not_found)
-        is UnknownHostException, is ConnectException, is SocketException -> getString(R.string.check_your_internet_connection)
+        is GenericException.CharacterNotFoundException -> getString(R.string.character_not_found)
         is SocketTimeoutException, is TimeoutException -> getString(R.string.timeout)
+        is UnknownHostException, is ConnectException, is SocketException -> getString(R.string.check_your_internet_connection)
+        is GenericException.EmptyCharactersException -> getString(R.string.no_characters_available_for_show)
         else -> getString(R.string.please_try_again_later)
     }
 }
