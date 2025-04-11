@@ -24,16 +24,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.rickandmorty.mobile.R
-import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiEvent
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiState
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
-import com.rickandmorty.mobile.util.exception.handleError
-import com.rickandmorty.mobile.util.showToast
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalSharedTransitionApi::class,
+)
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
@@ -43,21 +42,12 @@ fun CharacterDetailScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacters: () -> Unit,
 ) = with(sharedTransitionScope) {
-    val context = LocalContext.current
-
-    val characterUiEvent = viewModel.characterUiEvent.collectAsState(CharacterUiEvent.Initial).value
 
     val characterUiState =
         viewModel.characterUiState.collectAsState(CharacterUiState.Loading(isLoading = true)).value
 
     LaunchedEffect(characterId) {
         viewModel.getCharacterById(characterId)
-    }
-
-    LaunchedEffect(characterUiEvent) {
-        if (characterUiEvent is CharacterUiEvent.Error) {
-            context.showToast(context.handleError(characterUiEvent.exception))
-        }
     }
 
     Scaffold(

@@ -23,20 +23,20 @@ import com.rickandmorty.mobile.util.getCharacterStatusColor
 
 @Composable
 fun CharacterStatus(
+    status: String?,
     modifier: Modifier = Modifier,
-    status: String?
 ) {
     Box(
+        contentAlignment = Alignment.Center,
         modifier = modifier
             .background(
                 shape = CircleShape,
                 color = getCharacterStatusColor(status),
             ),
-        contentAlignment = Alignment.Center,
     ) {
         Text(
-            modifier = modifier.padding(1.dp),
             text = status ?: stringResource(R.string.unknown),
+            modifier = modifier.padding(1.dp),
             color = Color.White,
             style = MaterialTheme.typography.labelSmall,
         )
@@ -46,7 +46,5 @@ fun CharacterStatus(
 @Preview(showBackground = true)
 @Composable
 private fun CharacterStatusPreview() {
-    CharacterStatus(
-        status = "Alive",
-    )
+    CharacterStatus(status = "Alive")
 }

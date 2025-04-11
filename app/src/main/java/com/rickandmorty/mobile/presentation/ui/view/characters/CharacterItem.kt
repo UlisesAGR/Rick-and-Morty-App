@@ -42,7 +42,6 @@ fun CharacterItem(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) = with(sharedTransitionScope) {
-    val context = LocalContext.current
     Card(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_small))
@@ -57,18 +56,18 @@ fun CharacterItem(
         Box(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = modifier.fillMaxWidth()) {
                 AsyncImage(
-                    model = ImageRequest.Builder(context)
+                    model = ImageRequest.Builder(LocalContext.current)
                         .data(character.image)
                         .crossfade(500)
                         .placeholder(R.drawable.il_logo)
                         .error(R.drawable.il_logo)
                         .build(),
+                    contentDescription = character.name,
                     contentScale = ContentScale.Crop,
                     modifier = modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
                         .clip(MaterialTheme.shapes.medium),
-                    contentDescription = character.name,
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),

@@ -22,8 +22,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,10 +31,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.ui.components.EmptyStateRetry
-import com.rickandmorty.mobile.presentation.viewmodel.CharacterUiEvent
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
 import com.rickandmorty.mobile.util.exception.handleError
-import com.rickandmorty.mobile.util.showToast
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -51,11 +47,8 @@ fun CharactersScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
-    val context = LocalContext.current
 
     val characters = viewModel.characters.collectAsLazyPagingItems()
-
-    val characterUiEvent = viewModel.characterUiEvent.collectAsState(CharacterUiEvent.Initial).value
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = false,
@@ -63,12 +56,6 @@ fun CharactersScreen(
             characters.refresh()
         }
     )
-
-    LaunchedEffect(characterUiEvent) {
-        if (characterUiEvent is CharacterUiEvent.Error) {
-            context.showToast(context.handleError(characterUiEvent.exception))
-        }
-    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -89,16 +76,18 @@ fun CharactersScreen(
                         is LoadState.Loading -> {
                             CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
                         }
+
                         is LoadState.Error -> {
                             EmptyStateRetry(
                                 modifier = modifier.align(Alignment.Center),
-                                title = context.handleError(state.error),
+                                title = LocalContext.current.handleError(state.error),
                                 textButton = stringResource(R.string.retry),
                                 onClick = {
                                     characters.refresh()
                                 },
                             )
                         }
+
                         is LoadState.NotLoading -> {
                             CharactersList(
                                 characters = characters,

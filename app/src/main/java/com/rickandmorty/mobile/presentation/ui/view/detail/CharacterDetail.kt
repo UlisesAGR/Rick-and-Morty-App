@@ -44,12 +44,10 @@ fun CharacterDetail(
     character: CharacterModel?,
     navigateToCharacters: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     Column(modifier = modifier.fillMaxSize()) {
         if (character != null) {
             AsyncImage(
-                model = ImageRequest.Builder(context)
+                model = ImageRequest.Builder(LocalContext.current)
                     .data(character.image)
                     .crossfade(500)
                     .placeholder(R.drawable.il_logo)
@@ -103,11 +101,11 @@ private fun CharacterDetailForm(
             Row(modifier = modifier.fillMaxWidth()) {
                 Icon(
                     imageVector = Icons.Filled.Circle,
+                    contentDescription = stringResource(R.string.circular_icon),
                     modifier = Modifier
                         .size(dimensionResource(id = R.dimen.icon_size))
                         .align(Alignment.CenterVertically),
                     tint = getCharacterStatusColor(character.status),
-                    contentDescription = stringResource(R.string.circular_icon),
                 )
                 Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.space_big)))
                 Text(

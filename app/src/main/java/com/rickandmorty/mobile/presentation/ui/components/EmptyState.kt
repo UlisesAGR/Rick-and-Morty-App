@@ -26,8 +26,8 @@ import com.rickandmorty.mobile.R
 
 @Composable
 fun EmptyState(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -35,12 +35,12 @@ fun EmptyState(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
+            painter = painterResource(id = R.drawable.il_logo),
+            contentDescription = stringResource(R.string.empty_list),
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(2f)
                 .clip(MaterialTheme.shapes.small),
-            painter = painterResource(id = R.drawable.il_logo),
-            contentDescription = stringResource(R.string.empty_list),
         )
         Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.space_big)))
         Text(
@@ -52,18 +52,18 @@ fun EmptyState(
 
 @Composable
 fun EmptyStateRetry(
-    modifier: Modifier = Modifier,
     textButton: String,
     title: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(
             dimensionResource(id = R.dimen.padding_big),
             alignment = Alignment.CenterVertically,
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier,
     ) {
         Image(
             painter = painterResource(id = R.drawable.il_logo),
