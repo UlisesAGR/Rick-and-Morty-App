@@ -14,12 +14,12 @@ import com.rickandmorty.mobile.data.local.model.CharacterRemoteKeys
 @Dao
 interface CharacterRemoteKeysDao {
 
-    @Query("SELECT * FROM character_remote_keys WHERE characterId = :characterId")
+    @Query("SELECT * FROM character_remote_keys_table WHERE characterId = :characterId")
     suspend fun getRemoteKey(characterId: Int): CharacterRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllKeys(keys: List<CharacterRemoteKeys>)
 
-    @Query("DELETE FROM character_remote_keys")
+    @Query("DELETE FROM character_remote_keys_table")
     suspend fun clearRemoteKeys()
 }

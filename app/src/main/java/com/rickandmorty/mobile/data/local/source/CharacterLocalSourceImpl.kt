@@ -10,7 +10,7 @@ import com.rickandmorty.mobile.data.local.database.dao.CharacterDao
 import com.rickandmorty.mobile.data.local.database.dao.CharacterRemoteKeysDao
 import com.rickandmorty.mobile.data.local.model.CharacterEntity
 import com.rickandmorty.mobile.data.local.model.CharacterRemoteKeys
-import com.rickandmorty.mobile.data.network.model.CharacterResponse
+import com.rickandmorty.mobile.data.remote.model.CharacterResponse
 import javax.inject.Inject
 
 class CharacterLocalSourceImpl @Inject constructor(
@@ -30,11 +30,17 @@ class CharacterLocalSourceImpl @Inject constructor(
             )
         }
     }
+
     override suspend fun clearAllCharacters() {
         runCatching {
             characterDao.deleteAllCharacters()
         }
     }
+
+    override suspend fun getCharactersCount(): Int =
+        runCatching {
+            characterDao.getCharactersCount()
+        }.getOrDefault(0)
 
     override suspend fun getRemoteKey(characterId: Int): CharacterRemoteKeys? =
         runCatching {

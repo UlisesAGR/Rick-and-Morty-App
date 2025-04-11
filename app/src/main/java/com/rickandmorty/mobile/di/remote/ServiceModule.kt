@@ -3,9 +3,9 @@
  * Created by Ulises Gonzalez on 26/02/25
  * Copyright (c) 2025. All rights reserved
  */
-package com.rickandmorty.mobile.di.network
+package com.rickandmorty.mobile.di.remote
 
-import com.rickandmorty.mobile.data.network.service.CharacterService
+import com.rickandmorty.mobile.data.remote.service.CharacterService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

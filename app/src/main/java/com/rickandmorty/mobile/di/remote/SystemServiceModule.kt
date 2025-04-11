@@ -3,7 +3,7 @@
  * Created by Ulises Gonzalez on 26/02/25
  * Copyright (c) 2025. All rights reserved
  */
-package com.rickandmorty.mobile.di.network
+package com.rickandmorty.mobile.di.remote
 
 import android.content.Context
 import android.net.ConnectivityManager

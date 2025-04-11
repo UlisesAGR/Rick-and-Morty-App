@@ -24,6 +24,9 @@ interface CharacterDao {
     @Query("DELETE FROM characters_table")
     suspend fun deleteAllCharacters()
 
+    @Query("SELECT COUNT(*) FROM characters_table")
+    suspend fun getCharactersCount(): Int
+
     @Query("SELECT * FROM characters_table WHERE id = :characterId LIMIT 1")
     suspend fun getCharacterById(characterId: Int): CharacterEntity?
 }

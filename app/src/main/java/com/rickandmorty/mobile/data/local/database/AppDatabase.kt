@@ -13,7 +13,10 @@ import com.rickandmorty.mobile.data.local.model.CharacterEntity
 import com.rickandmorty.mobile.data.local.model.CharacterRemoteKeys
 
 @Database(
-    entities = [CharacterEntity::class, CharacterRemoteKeys::class],
+    entities = [
+        CharacterEntity::class,
+        CharacterRemoteKeys::class,
+    ],
     version = 1,
     exportSchema = false,
 )

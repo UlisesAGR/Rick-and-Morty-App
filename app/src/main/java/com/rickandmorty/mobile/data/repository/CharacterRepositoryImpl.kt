@@ -12,7 +12,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.rickandmorty.mobile.data.local.model.CharacterEntity
 import com.rickandmorty.mobile.data.local.source.CharacterLocalSource
-import com.rickandmorty.mobile.data.network.source.CharacterNetworkSource
+import com.rickandmorty.mobile.data.remote.source.CharacterRemoteSource
 import com.rickandmorty.mobile.data.paging.CharacterRemoteMediator
 import com.rickandmorty.mobile.domain.repository.CharacterRepository
 import com.rickandmorty.mobile.util.Constants.PAGE_SIZE
@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
-    private val characterNetworkSource: CharacterNetworkSource,
+    private val characterRemoteSource: CharacterRemoteSource,
     private val characterLocalSource: CharacterLocalSource,
     private val connectivityManager: ConnectivityManager,
     private val dispatcher: CoroutineDispatcher,
@@ -39,7 +39,7 @@ class CharacterRepositoryImpl @Inject constructor(
                 initialLoadSize = PAGE_SIZE,
             ),
             remoteMediator = CharacterRemoteMediator(
-                characterNetworkSource,
+                characterRemoteSource,
                 characterLocalSource,
                 connectivityManager,
             ),

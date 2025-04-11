@@ -3,9 +3,9 @@
  * Created by Ulises Gonzalez on 26/02/25
  * Copyright (c) 2025. All rights reserved
  */
-package com.rickandmorty.mobile.di.network
+package com.rickandmorty.mobile.di.remote
 
-import com.rickandmorty.mobile.BuildConfig.BASE_URL
+import com.rickandmorty.mobile.BuildConfig.URL_BASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +40,7 @@ object RetrofitModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(URL_BASE)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 }

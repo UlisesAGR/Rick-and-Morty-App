@@ -8,7 +8,7 @@ package com.rickandmorty.mobile.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "character_remote_keys")
+@Entity(tableName = "character_remote_keys_table")
 data class CharacterRemoteKeys(
     @PrimaryKey val characterId: Int,
     val prevKey: Int?,

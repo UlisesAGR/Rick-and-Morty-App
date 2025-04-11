@@ -7,6 +7,7 @@ package com.rickandmorty.mobile.di.local
 
 import android.content.Context
 import androidx.room.Room
+import com.rickandmorty.mobile.BuildConfig.DATABASE_NAME
 import com.rickandmorty.mobile.data.local.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,6 @@ object RoomModule {
         Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            name = "DATABASE_NAME",
+            name = DATABASE_NAME,
         ).fallbackToDestructiveMigration(false).build()
 }

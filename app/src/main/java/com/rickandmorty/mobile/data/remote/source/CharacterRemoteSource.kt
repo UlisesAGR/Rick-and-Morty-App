@@ -1,13 +1,13 @@
 /*
- * CharacterNetworkSource.kt
+ * CharacterRemoteSource.kt
  * Created by Ulises Gonzalez
  * Copyright (c) 2025. All rights reserved
  */
-package com.rickandmorty.mobile.data.network.source
+package com.rickandmorty.mobile.data.remote.source
 
-import com.rickandmorty.mobile.data.network.model.CharactersResponse
+import com.rickandmorty.mobile.data.remote.model.CharactersResponse
 import com.rickandmorty.mobile.util.network.Resource
 
-interface CharacterNetworkSource {
+interface CharacterRemoteSource {
     suspend fun getCharacters(page: Int): Resource<CharactersResponse>
 }

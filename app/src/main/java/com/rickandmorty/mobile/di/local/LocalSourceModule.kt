@@ -1,5 +1,5 @@
 /*
- * CharacterLocalSourceModule.kt
+ * LocalSourceModule.kt
  * Created by Ulises Gonzalez
  * Copyright (c) 2025. All rights reserved
  */
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CharacterLocalSourceModule {
+abstract class LocalSourceModule {
 
     @Binds
     @Singleton

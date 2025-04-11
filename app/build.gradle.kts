@@ -18,10 +18,11 @@ android {
 
     defaultConfig {
         resValue("string", "APP_NAME", "\"${properties["app.name"]}\"")
-        resValue("string", "DATABASE_NAME", "\"${properties["database.name"]}\"")
 
-        buildConfigField("String", "BASE_URL", "\"https://rickandmortyapi.com/api/\"")
-        buildConfigField("String", "CHARACTER_ENDPOINT", "\"character\"")
+        buildConfigField("String", "DATABASE_NAME", "\"${properties["database.name"]}\"")
+
+        buildConfigField("String", "URL_BASE", "\"${properties["url.base"]}\"")
+        buildConfigField("String", "ENDPOINT_CHARACTER", "\"${properties["endpoint.characters"]}\"")
 
         applicationId = BuildConfig.APP_ID
         minSdk = BuildConfig.MIN_SDK_VERSION
