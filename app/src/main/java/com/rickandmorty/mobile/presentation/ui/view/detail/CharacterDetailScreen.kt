@@ -42,7 +42,6 @@ fun CharacterDetailScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacters: () -> Unit,
 ) = with(sharedTransitionScope) {
-
     val characterUiState =
         viewModel.characterUiState.collectAsState(CharacterUiState.Loading(isLoading = true)).value
 

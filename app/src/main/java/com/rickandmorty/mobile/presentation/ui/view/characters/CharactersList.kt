@@ -34,7 +34,6 @@ fun CharactersList(
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
     val lazyGridState = rememberLazyGridState()
-
     LazyVerticalGrid(
         state = lazyGridState,
         columns = GridCells.Fixed(2),

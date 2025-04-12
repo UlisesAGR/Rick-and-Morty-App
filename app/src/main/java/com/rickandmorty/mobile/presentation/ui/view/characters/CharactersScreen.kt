@@ -24,7 +24,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
@@ -32,7 +31,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.ui.components.EmptyStateRetry
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
-import com.rickandmorty.mobile.util.exception.handleError
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -47,7 +45,6 @@ fun CharactersScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) {
-
     val characters = viewModel.characters.collectAsLazyPagingItems()
 
     val pullRefreshState = rememberPullRefreshState(
@@ -76,18 +73,16 @@ fun CharactersScreen(
                         is LoadState.Loading -> {
                             CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
                         }
-
                         is LoadState.Error -> {
                             EmptyStateRetry(
                                 modifier = modifier.align(Alignment.Center),
-                                title = LocalContext.current.handleError(state.error),
+                                title = stringResource(R.string.no_characters_available_for_show),
                                 textButton = stringResource(R.string.retry),
                                 onClick = {
                                     characters.refresh()
                                 },
                             )
                         }
-
                         is LoadState.NotLoading -> {
                             CharactersList(
                                 characters = characters,
