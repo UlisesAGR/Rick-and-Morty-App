@@ -15,9 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.util.getCharacterStatusColor
 
@@ -36,9 +36,9 @@ fun CharacterStatus(
     ) {
         Text(
             text = status ?: stringResource(R.string.unknown),
-            modifier = Modifier.padding(1.dp),
             color = Color.White,
             style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_status)),
         )
     }
 }

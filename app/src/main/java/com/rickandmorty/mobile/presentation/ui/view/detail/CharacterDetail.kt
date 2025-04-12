@@ -122,20 +122,20 @@ private fun CharacterDetailForm(
                     id = R.string.species_inter,
                     character.species ?: stringResource(R.string.empty)
                 ),
-                modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth(),
             )
             Text(
                 text = stringResource(
                     id = R.string.gender_inter,
                     character.gender ?: stringResource(R.string.empty)
                 ),
-                modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

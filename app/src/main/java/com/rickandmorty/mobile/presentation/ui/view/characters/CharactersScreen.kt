@@ -65,7 +65,7 @@ fun CharactersScreen(
         content = { innerPadding ->
             Crossfade(targetState = characters.loadState.refresh) { state ->
                 Box(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding)
                         .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
@@ -75,7 +75,7 @@ fun CharactersScreen(
                     when (state) {
                         is LoadState.Loading -> {
                             ProgressIndicator(
-                                modifier = modifier
+                                modifier = Modifier
                                     .fillMaxSize()
                                     .background(MaterialTheme.colorScheme.background)
                                     .wrapContentSize(Alignment.Center),
@@ -85,7 +85,7 @@ fun CharactersScreen(
                             EmptyStateRetry(
                                 title = stringResource(R.string.error_loading_characters),
                                 textButton = stringResource(R.string.retry),
-                                modifier = modifier.align(Alignment.Center),
+                                modifier = Modifier.fillMaxSize(),
                                 onClick = {
                                     characters.refresh()
                                 },

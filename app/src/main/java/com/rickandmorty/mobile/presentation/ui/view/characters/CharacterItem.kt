@@ -78,17 +78,17 @@ fun CharacterItem(
                 ) {
                     Text(
                         text = character.name ?: stringResource(R.string.empty),
-                        modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     Text(
                         text = character.species ?: stringResource(R.string.empty),
-                        modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }
