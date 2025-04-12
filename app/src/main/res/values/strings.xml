@@ -28,11 +28,13 @@
 
     <!-- Empty State -->
     <string name="empty_list">Empty List</string>
-    <string name="no_characters_available_for_show">No characters available for show</string>
-    <string name="no_character_available_for_show">No character available for show</string>
 
     <!-- Character List -->
     <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+    <string name="error_loading_characters">Error loading characters</string>
+    <string name="no_characters_found">No characters found</string>
+    <string name="no_character_found">No characters found</string>
     <string name="no_more_characters_to_load">No more characters to load</string>
 
     <!-- Character -->

@@ -5,15 +5,14 @@
  */
 package com.rickandmorty.mobile.data.repository
 
-import android.net.ConnectivityManager
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.rickandmorty.mobile.data.local.model.CharacterEntity
 import com.rickandmorty.mobile.data.local.source.CharacterLocalSource
-import com.rickandmorty.mobile.data.remote.source.CharacterRemoteSource
 import com.rickandmorty.mobile.data.paging.CharacterRemoteMediator
+import com.rickandmorty.mobile.data.remote.source.CharacterRemoteSource
 import com.rickandmorty.mobile.domain.repository.CharacterRepository
 import com.rickandmorty.mobile.util.Constants.PAGE_SIZE
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,14 +21,12 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@OptIn(ExperimentalPagingApi::class)
 class CharacterRepositoryImpl @Inject constructor(
     private val characterRemoteSource: CharacterRemoteSource,
     private val characterLocalSource: CharacterLocalSource,
-    private val connectivityManager: ConnectivityManager,
     private val dispatcher: CoroutineDispatcher,
 ) : CharacterRepository {
-
-    private val pagingSourceFactory = { characterLocalSource.getAllCharacters() }
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getCharacters(): Flow<PagingData<CharacterEntity>> =
@@ -41,9 +38,8 @@ class CharacterRepositoryImpl @Inject constructor(
             remoteMediator = CharacterRemoteMediator(
                 characterRemoteSource,
                 characterLocalSource,
-                connectivityManager,
             ),
-            pagingSourceFactory = pagingSourceFactory,
+            pagingSourceFactory = characterLocalSource::getAllCharacters,
         ).flow.flowOn(dispatcher)
 
     override suspend fun getCharacterById(

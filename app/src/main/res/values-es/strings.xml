@@ -24,11 +24,11 @@
 
     <!-- Empty State -->
     <string name="empty_list">Lista vacia</string>
-    <string name="no_characters_available_for_show">Sin personajes para mostrar</string>
-    <string name="no_character_available_for_show">Sin personaje para mostrar</string>
 
     <!-- Character -->
     <string name="retry">Reintentar</string>
+    <string name="no_characters_found">No se encontraron personajes</string>
+    <string name="no_character_found">No se encontro el personaje</string>
     <string name="no_more_characters_to_load">No hay mas personajes para mostrar</string>
     <string name="circular_icon">Icono circular</string>
     <string name="back">Atras</string>
@@ -36,5 +36,7 @@
     <!-- Internet connection -->
     <string name="you_are_currently_online">Estas actualmente en línea</string>
     <string name="you_are_currently_offline">Estas actualmente sin conexion</string>
+    <string name="refresh">Refrescar</string>
+    <string name="error_loading_characters">Error cargando personajes</string>
 
 </resources>

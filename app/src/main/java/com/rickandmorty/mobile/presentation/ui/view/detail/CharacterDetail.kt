@@ -36,6 +36,7 @@ import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import com.rickandmorty.mobile.presentation.ui.components.ButtonPrimary
 import com.rickandmorty.mobile.presentation.ui.components.EmptyState
+import com.rickandmorty.mobile.util.Constants.ANIMATION_DURATION
 import com.rickandmorty.mobile.util.getCharacterStatusColor
 
 @Composable
@@ -49,25 +50,25 @@ fun CharacterDetail(
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(character.image)
-                    .crossfade(500)
+                    .crossfade(ANIMATION_DURATION)
                     .placeholder(R.drawable.il_logo)
                     .error(R.drawable.il_logo)
                     .build(),
                 contentDescription = character.name,
                 contentScale = ContentScale.Crop,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .clip(MaterialTheme.shapes.medium),
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_big)),
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(id = R.dimen.padding)),
             ) {
                 CharacterDetailForm(
-                    modifier = modifier,
+                    modifier = Modifier,
                     character = character,
                 )
                 ButtonPrimary(
@@ -79,7 +80,7 @@ fun CharacterDetail(
             }
         } else {
             EmptyState(
-                title = stringResource(R.string.no_character_available_for_show),
+                title = stringResource(R.string.no_characters_found),
                 modifier = Modifier.fillMaxSize(),
             )
         }
@@ -94,11 +95,11 @@ private fun CharacterDetailForm(
     Card {
         Column(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_big)),
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(dimensionResource(id = R.dimen.padding_big)),
         ) {
-            Row(modifier = modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth()) {
                 Icon(
                     imageVector = Icons.Filled.Circle,
                     contentDescription = stringResource(R.string.circular_icon),
@@ -107,7 +108,7 @@ private fun CharacterDetailForm(
                         .align(Alignment.CenterVertically),
                     tint = getCharacterStatusColor(character.status),
                 )
-                Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.space_big)))
+                Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_big)))
                 Text(
                     text = character.name ?: stringResource(R.string.empty),
                     textAlign = TextAlign.Center,
@@ -121,7 +122,7 @@ private fun CharacterDetailForm(
                     id = R.string.species_inter,
                     character.species ?: stringResource(R.string.empty)
                 ),
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -131,7 +132,7 @@ private fun CharacterDetailForm(
                     id = R.string.gender_inter,
                     character.gender ?: stringResource(R.string.empty)
                 ),
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

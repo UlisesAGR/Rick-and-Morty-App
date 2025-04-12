@@ -75,7 +75,7 @@ fun CharacterDetailScreen(
         },
         content = { innerPadding ->
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
             ) {

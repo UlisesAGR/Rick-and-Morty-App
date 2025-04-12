@@ -5,19 +5,24 @@
  */
 package com.rickandmorty.mobile.presentation.ui.view.characters
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,7 +35,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.ui.components.EmptyStateRetry
+import com.rickandmorty.mobile.presentation.ui.components.ProgressIndicator
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
+import com.rickandmorty.mobile.util.Constants.ANIMATION_DURATION
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -71,25 +78,46 @@ fun CharactersScreen(
                     ) {
                     when (state) {
                         is LoadState.Loading -> {
-                            CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
+                            ProgressIndicator(
+                                modifier = modifier
+                                    .fillMaxSize()
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .wrapContentSize(Alignment.Center),
+                            )
                         }
                         is LoadState.Error -> {
                             EmptyStateRetry(
-                                modifier = modifier.align(Alignment.Center),
-                                title = stringResource(R.string.no_characters_available_for_show),
+                                title = stringResource(R.string.error_loading_characters),
                                 textButton = stringResource(R.string.retry),
+                                modifier = modifier.align(Alignment.Center),
                                 onClick = {
                                     characters.refresh()
                                 },
                             )
                         }
                         is LoadState.NotLoading -> {
-                            CharactersList(
-                                characters = characters,
-                                sharedTransitionScope = sharedTransitionScope,
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                navigateToCharacterDetail = navigateToCharacterDetail,
-                            )
+                            if (characters.itemCount > 0) {
+                                CharactersList(
+                                    characters = characters,
+                                    sharedTransitionScope = sharedTransitionScope,
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    navigateToCharacterDetail = navigateToCharacterDetail,
+                                )
+                            } else {
+                                AnimatedVisibility(
+                                    visible = characters.itemCount == 0,
+                                    enter = fadeIn(tween(durationMillis = ANIMATION_DURATION)),
+                                ) {
+                                    EmptyStateRetry(
+                                        title = stringResource(R.string.no_characters_found),
+                                        textButton = stringResource(R.string.retry),
+                                        modifier = modifier.align(Alignment.Center),
+                                        onClick = {
+                                            characters.refresh()
+                                        },
+                                    )
+                                }
+                            }
                         }
                     }
                     PullRefreshIndicator(

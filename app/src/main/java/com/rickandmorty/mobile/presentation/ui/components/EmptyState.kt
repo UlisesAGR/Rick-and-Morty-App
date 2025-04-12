@@ -30,9 +30,9 @@ fun EmptyState(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier,
     ) {
         Image(
             painter = painterResource(id = R.drawable.il_logo),
@@ -42,7 +42,7 @@ fun EmptyState(
                 .aspectRatio(2f)
                 .clip(MaterialTheme.shapes.small),
         )
-        Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.space_big)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_big)))
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,

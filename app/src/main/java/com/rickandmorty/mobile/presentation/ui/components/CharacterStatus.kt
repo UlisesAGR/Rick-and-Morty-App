@@ -36,7 +36,7 @@ fun CharacterStatus(
     ) {
         Text(
             text = status ?: stringResource(R.string.unknown),
-            modifier = modifier.padding(1.dp),
+            modifier = Modifier.padding(1.dp),
             color = Color.White,
             style = MaterialTheme.typography.labelSmall,
         )

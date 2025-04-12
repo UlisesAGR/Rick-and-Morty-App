@@ -57,12 +57,12 @@ fun CharactersList(
                 is LoadState.Error -> {
                     ButtonPrimary(
                         text = stringResource(R.string.retry),
-                        onClick = {
-                            characters.retry()
-                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(dimensionResource(id = R.dimen.padding_small)),
+                        onClick = {
+                            characters.retry()
+                        },
                     )
                 }
                 is LoadState.NotLoading -> {}

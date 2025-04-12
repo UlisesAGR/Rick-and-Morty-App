@@ -7,5 +7,4 @@ package com.rickandmorty.mobile.util.exception
 
 sealed class GenericException(message: String? = "") : Throwable(message) {
     class CharacterNotFoundException(message: String? = "") : Exception(message)
-    class EmptyCharactersException(message: String? = "") : Exception(message)
 }

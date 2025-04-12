@@ -32,6 +32,7 @@ import coil.request.ImageRequest
 import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import com.rickandmorty.mobile.presentation.ui.components.CharacterStatus
+import com.rickandmorty.mobile.util.Constants.ANIMATION_DURATION
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -43,7 +44,7 @@ fun CharacterItem(
     navigateToCharacterDetail: (characterId: Int) -> Unit,
 ) = with(sharedTransitionScope) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(dimensionResource(id = R.dimen.padding_small))
             .sharedBounds(
                 rememberSharedContentState(key = "image_${character.id}"),
@@ -54,37 +55,37 @@ fun CharacterItem(
             },
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(character.image)
-                        .crossfade(500)
+                        .crossfade(ANIMATION_DURATION)
                         .placeholder(R.drawable.il_logo)
                         .error(R.drawable.il_logo)
                         .build(),
                     contentDescription = character.name,
                     contentScale = ContentScale.Crop,
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
                         .clip(MaterialTheme.shapes.medium),
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(id = R.dimen.padding)),
                 ) {
                     Text(
                         text = character.name ?: stringResource(R.string.empty),
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
                         text = character.species ?: stringResource(R.string.empty),
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
