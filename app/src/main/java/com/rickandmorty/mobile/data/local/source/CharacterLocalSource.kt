@@ -15,8 +15,10 @@ interface CharacterLocalSource {
     suspend fun insertAllCharacters(characters: List<CharacterResponse>)
     suspend fun clearAllCharacters()
     suspend fun getCharactersCount(): Int
-    suspend fun getRemoteKey(characterId: Int): CharacterRemoteKeys?
-    suspend fun insertAllKeys(keys: List<CharacterRemoteKeys>)
-    suspend fun clearRemoteKeys()
+
+    suspend fun getCharacterRemoteKey(characterId: Int): CharacterRemoteKeys?
+    suspend fun insertAllCharactersRemoteKeys(charactersRemoteKeys: List<CharacterRemoteKeys>)
+    suspend fun clearAllCharactersRemoteKeys()
+
     suspend fun getCharacterById(characterId: Int): CharacterEntity?
 }

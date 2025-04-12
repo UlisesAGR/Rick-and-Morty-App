@@ -5,13 +5,10 @@
  */
 package com.rickandmorty.mobile.presentation.ui.view.characters
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +34,6 @@ import com.rickandmorty.mobile.R
 import com.rickandmorty.mobile.presentation.ui.components.EmptyStateRetry
 import com.rickandmorty.mobile.presentation.ui.components.ProgressIndicator
 import com.rickandmorty.mobile.presentation.viewmodel.CharacterViewModel
-import com.rickandmorty.mobile.util.Constants.ANIMATION_DURATION
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -96,28 +92,12 @@ fun CharactersScreen(
                             )
                         }
                         is LoadState.NotLoading -> {
-                            if (characters.itemCount > 0) {
-                                CharactersList(
-                                    characters = characters,
-                                    sharedTransitionScope = sharedTransitionScope,
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                    navigateToCharacterDetail = navigateToCharacterDetail,
-                                )
-                            } else {
-                                AnimatedVisibility(
-                                    visible = characters.itemCount == 0,
-                                    enter = fadeIn(tween(durationMillis = ANIMATION_DURATION)),
-                                ) {
-                                    EmptyStateRetry(
-                                        title = stringResource(R.string.no_characters_found),
-                                        textButton = stringResource(R.string.retry),
-                                        modifier = modifier.align(Alignment.Center),
-                                        onClick = {
-                                            characters.refresh()
-                                        },
-                                    )
-                                }
-                            }
+                            CharactersList(
+                                characters = characters,
+                                sharedTransitionScope = sharedTransitionScope,
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                navigateToCharacterDetail = navigateToCharacterDetail,
+                            )
                         }
                     }
                     PullRefreshIndicator(

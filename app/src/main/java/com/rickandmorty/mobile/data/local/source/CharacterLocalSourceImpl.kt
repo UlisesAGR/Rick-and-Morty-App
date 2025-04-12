@@ -42,20 +42,20 @@ class CharacterLocalSourceImpl @Inject constructor(
             characterDao.getCharactersCount()
         }.getOrDefault(0)
 
-    override suspend fun getRemoteKey(characterId: Int): CharacterRemoteKeys? =
+    override suspend fun getCharacterRemoteKey(characterId: Int): CharacterRemoteKeys? =
         runCatching {
-            characterRemoteKeysDao.getRemoteKey(characterId)
+            characterRemoteKeysDao.getCharacterRemoteKey(characterId)
         }.getOrNull()
 
-    override suspend fun insertAllKeys(keys: List<CharacterRemoteKeys>) {
+    override suspend fun insertAllCharactersRemoteKeys(charactersRemoteKeys: List<CharacterRemoteKeys>) {
         runCatching {
-            characterRemoteKeysDao.insertAllKeys(keys)
+            characterRemoteKeysDao.insertAllCharactersRemoteKeys(charactersRemoteKeys)
         }
     }
 
-    override suspend fun clearRemoteKeys() {
+    override suspend fun clearAllCharactersRemoteKeys() {
         runCatching {
-            characterRemoteKeysDao.clearRemoteKeys()
+            characterRemoteKeysDao.clearAllCharactersRemoteKeys()
         }
     }
 

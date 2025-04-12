@@ -50,21 +50,23 @@ class CharacterRemoteMediator(
             val response = characterRemoteSource.getCharacters(page = currentPage)
             val characters = response.data?.results.orEmpty()
 
+            if (loadType == LoadType.REFRESH) {
+                clearAllData()
+            }
+
             val endOfPaginationReached = response.data?.info?.next == null
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextKey = if (endOfPaginationReached) null else currentPage + 1
 
-            if (loadType == LoadType.REFRESH) {
-                clearAllData()
-            }
-            val keys = characters.map { character ->
+            val charactersRemoteKeys = characters.map { character ->
                 CharacterRemoteKeys(
                     characterId = character.id,
                     prevKey = prevPage,
                     nextKey = nextKey,
                 )
             }
-            characterLocalSource.insertAllKeys(keys)
+
+            characterLocalSource.insertAllCharactersRemoteKeys(charactersRemoteKeys)
             characterLocalSource.insertAllCharacters(characters)
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
@@ -81,7 +83,7 @@ class CharacterRemoteMediator(
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, CharacterEntity>): CharacterRemoteKeys? =
         state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
-                characterLocalSource.getRemoteKey(characterId = id)
+                characterLocalSource.getCharacterRemoteKey(characterId = id)
             }
         }
 
@@ -89,19 +91,19 @@ class CharacterRemoteMediator(
         state.pages.firstOrNull { page ->
             page.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { character ->
-            characterLocalSource.getRemoteKey(characterId = character.id)
+            characterLocalSource.getCharacterRemoteKey(characterId = character.id)
         }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, CharacterEntity>): CharacterRemoteKeys? =
         state.pages.lastOrNull { page ->
             page.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { character ->
-            characterLocalSource.getRemoteKey(characterId = character.id)
+            characterLocalSource.getCharacterRemoteKey(characterId = character.id)
         }
 
     @Transaction
     private suspend fun clearAllData() {
-        characterLocalSource.clearRemoteKeys()
+        characterLocalSource.clearAllCharactersRemoteKeys()
         characterLocalSource.clearAllCharacters()
     }
 }
