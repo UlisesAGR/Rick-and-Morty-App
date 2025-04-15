@@ -40,7 +40,7 @@ class CharacterLocalSourceImpl @Inject constructor(
     override suspend fun getCharactersCount(): Int =
         runCatching {
             characterDao.getCharactersCount()
-        }.getOrDefault(0)
+        }.getOrDefault(defaultValue = 0)
 
     override suspend fun getCharacterRemoteKey(characterId: Int): CharacterRemoteKeys? =
         runCatching {

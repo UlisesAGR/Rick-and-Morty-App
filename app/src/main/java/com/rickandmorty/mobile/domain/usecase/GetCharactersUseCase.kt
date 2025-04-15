@@ -8,6 +8,7 @@ package com.rickandmorty.mobile.domain.usecase
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.rickandmorty.mobile.data.repository.CharacterRepositoryImpl
+import com.rickandmorty.mobile.domain.mapper.toDomain
 import com.rickandmorty.mobile.domain.model.CharacterModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

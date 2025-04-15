@@ -7,7 +7,6 @@ package com.rickandmorty.mobile.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.rickandmorty.mobile.domain.model.CharacterModel
 
 @Entity(tableName = "characters_table")
 data class CharacterEntity(
@@ -17,13 +16,4 @@ data class CharacterEntity(
     val status: String?,
     val gender: String?,
     val image: String?,
-) {
-    fun toDomain(): CharacterModel = CharacterModel(
-        id = id,
-        name = name,
-        species = species,
-        status = status,
-        gender = gender,
-        image = image,
-    )
-}
+)
